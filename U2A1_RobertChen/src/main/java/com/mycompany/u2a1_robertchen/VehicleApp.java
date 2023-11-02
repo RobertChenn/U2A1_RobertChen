@@ -10,9 +10,20 @@ package com.mycompany.u2a1_robertchen;
  */
 public class VehicleApp {
     private int passengerNum;
-    private int passengerFare;
+    private double passengerFare;
     private double fuelEfficiency;
     
     public static double gasPrice;
     public static double PROFIT = 400;
+    
+    public VehicleApp (int passengerNum, double passengerFare, int fuelEfficiency) {
+        this.passengerNum = passengerNum;
+        this.passengerFare = passengerFare;
+        this.fuelEfficiency = fuelEfficiency;
+    }
+    
+//    public int revenue() {
+//        
+//    }
+    
 }
