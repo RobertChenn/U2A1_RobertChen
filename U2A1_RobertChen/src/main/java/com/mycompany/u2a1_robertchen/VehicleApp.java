@@ -22,8 +22,29 @@ public class VehicleApp {
         this.fuelEfficiency = fuelEfficiency;
     }
     
-//    public int revenue() {
+    public double revenue() {
+        return passengerNum * passengerFare;
+    }
+    
+    public double totalCost(int distance) {
+        return distance * gasPrice;
+    }
+    
+//    public double totalProfit() {
 //        
 //    }
     
+    public boolean isProfitable() {
+        if (totalProfit() > PROFIT) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+//    public static double compareTo() {}
+    
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

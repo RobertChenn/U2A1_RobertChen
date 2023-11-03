@@ -13,9 +13,11 @@ public class Vehicle extends javax.swing.JFrame {
     /**
      * Creates new form Vehicle
      */
+    int distanceTravelled, passengerAmount;
     public Vehicle() {
         initComponents();
-        VehicleApp vehicle = new VehicleApp(distance.getText, 2, 3);
+        VehicleApp vehicle = new VehicleApp(passengerAmount, 2, 3);
+        vehicle.gasPrice = Double.parseDouble(gasCost.getText());
     }
 
     /**
@@ -30,10 +32,17 @@ public class Vehicle extends javax.swing.JFrame {
         title = new javax.swing.JLabel();
         distancePrompt = new javax.swing.JLabel();
         distance = new javax.swing.JTextField();
-        gasPrice = new javax.swing.JLabel();
+        gasPricePrompt = new javax.swing.JLabel();
         passengerNumberPrompt = new javax.swing.JLabel();
         passengerNumber = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
+        gasCost = new javax.swing.JTextField();
+        passengerCostPrompt = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        output = new javax.swing.JTextArea();
+        passengerCost = new javax.swing.JTextField();
+        fuelEfficiencyPrompt = new javax.swing.JLabel();
+        vehicleFuelEfficiency = new javax.swing.JTextField();
+        confirm = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,11 +52,37 @@ public class Vehicle extends javax.swing.JFrame {
 
         distancePrompt.setText("Enter the distance the vehicle has travelled:");
 
-        gasPrice.setText("Gas Price: $1.54/L");
+        distance.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                distanceActionPerformed(evt);
+            }
+        });
+
+        gasPricePrompt.setText("Gas Price:");
 
         passengerNumberPrompt.setText("Enter the number of pasengers in the vehicle:");
 
-        jLabel1.setText("jLabel1");
+        passengerNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passengerNumberActionPerformed(evt);
+            }
+        });
+
+        passengerCostPrompt.setText("Enter the cost for each passenger:");
+
+        output.setEditable(false);
+        output.setColumns(20);
+        output.setRows(5);
+        jScrollPane1.setViewportView(output);
+
+        fuelEfficiencyPrompt.setText("Enter the fuel efficiency:");
+
+        confirm.setText("Confirm");
+        confirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -56,49 +91,88 @@ public class Vehicle extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(title)
-                .addGap(66, 66, 66)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gasPrice)
-                    .addComponent(jLabel1))
-                .addGap(41, 41, 41))
+                .addGap(56, 56, 56)
+                .addComponent(gasPricePrompt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gasCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
             .addGroup(layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(passengerNumberPrompt)
+                        .addComponent(fuelEfficiencyPrompt)
+                        .addGap(18, 18, 18)
+                        .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(passengerCostPrompt)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(passengerNumber))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(distancePrompt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(distance, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                        .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63)
+                        .addComponent(confirm))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(passengerNumberPrompt)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(passengerNumber))
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(distancePrompt)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(distance, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(title))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(gasPricePrompt)
+                                    .addComponent(gasCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(title)
-                            .addComponent(jLabel1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(gasPrice)))
-                .addGap(18, 18, 18)
+                            .addComponent(distancePrompt)
+                            .addComponent(distance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(passengerNumberPrompt)
+                            .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(passengerCostPrompt)
+                            .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(confirm)
+                        .addGap(6, 6, 6)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(distancePrompt)
-                    .addComponent(distance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passengerNumberPrompt)
-                    .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(273, Short.MAX_VALUE))
+                    .addComponent(fuelEfficiencyPrompt)
+                    .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void distanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_distanceActionPerformed
+        distanceTravelled = Integer.parseInt(distance.getText());
+    }//GEN-LAST:event_distanceActionPerformed
+
+    private void passengerNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passengerNumberActionPerformed
+        passengerAmount = Integer.parseInt(passengerNumber.getText());
+    }//GEN-LAST:event_passengerNumberActionPerformed
+
+    private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -135,12 +209,19 @@ public class Vehicle extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton confirm;
     private javax.swing.JTextField distance;
     private javax.swing.JLabel distancePrompt;
-    private javax.swing.JLabel gasPrice;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel fuelEfficiencyPrompt;
+    private javax.swing.JTextField gasCost;
+    private javax.swing.JLabel gasPricePrompt;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea output;
+    private javax.swing.JTextField passengerCost;
+    private javax.swing.JLabel passengerCostPrompt;
     private javax.swing.JTextField passengerNumber;
     private javax.swing.JLabel passengerNumberPrompt;
     private javax.swing.JLabel title;
+    private javax.swing.JTextField vehicleFuelEfficiency;
     // End of variables declaration//GEN-END:variables
 }
