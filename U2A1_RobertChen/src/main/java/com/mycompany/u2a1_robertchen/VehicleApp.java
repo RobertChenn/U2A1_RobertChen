@@ -13,8 +13,8 @@ public class VehicleApp extends javax.swing.JFrame {
     /**
      * Creates new form Vehicle
      */
-    int passengerAmount;
-    double distance, gasPrice;
+    int passengerNum, vehicleNumber = 0;
+    double distance, gasPrice, passengerFare, fuelEfficiency;
     public VehicleApp() {
         initComponents();
 
@@ -97,31 +97,29 @@ public class VehicleApp extends javax.swing.JFrame {
                 .addComponent(gasCost, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(passengerCostPrompt)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(passengerNumberPrompt)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(distancePrompt)
-                                .addGap(18, 18, 18)
-                                .addComponent(distanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(43, Short.MAX_VALUE))
+                        .addComponent(passengerNumberPrompt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(passengerCostPrompt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(distancePrompt)
+                        .addGap(18, 18, 18)
+                        .addComponent(distanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(fuelEfficiencyPrompt)
                         .addGap(18, 18, 18)
-                        .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(confirm)
-                        .addGap(56, 56, 56))))
+                        .addGap(20, 20, 20)))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -135,30 +133,27 @@ public class VehicleApp extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(gasPricePrompt)
                             .addComponent(gasCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(distancePrompt)
-                    .addComponent(distanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passengerNumberPrompt)
                     .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(distancePrompt)
+                    .addComponent(distanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passengerCostPrompt)
                     .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fuelEfficiencyPrompt)
-                            .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(confirm)))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(3, 3, 3)
+                .addComponent(confirm)
+                .addGap(1, 1, 1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fuelEfficiencyPrompt)
+                    .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -173,11 +168,27 @@ public class VehicleApp extends javax.swing.JFrame {
     }//GEN-LAST:event_passengerNumberActionPerformed
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
-        distance = Double.parseDouble(distanceInput.getText());
-        gasPrice = Double.parseDouble(gasCost.getText());
-        passengerAmount = Integer.parseInt(passengerNumber.getText());
-        Vehicle vehicle = new Vehicle(distance, passengerAmount, 2, 3, gasPrice);
-        output.setText(Double.toString(vehicle.setDistance(distance)));
+        try {
+            vehicleNumber ++;
+            distance = Double.parseDouble(distanceInput.getText());
+            gasPrice = Double.parseDouble(gasCost.getText());
+            passengerNum = Integer.parseInt(passengerNumber.getText());
+            passengerFare = Double.parseDouble(passengerCost.getText());
+            fuelEfficiency = Double.parseDouble(vehicleFuelEfficiency.getText());
+            Vehicle vehicle = new Vehicle(distance, passengerNum, passengerFare, fuelEfficiency, gasPrice);
+            output.append("Vehicle " + Integer.toString(vehicleNumber) + ":\n");
+            output.append("Distance travelled: " + Double.toString(vehicle.setDistance(distance)) + "\n");
+            output.append("Number of passengers: " + Integer.toString(vehicle.setPassengerNum()) + "\n");
+            output.append("Cost per passenger: " + Double.toString(vehicle.setPassengerFare()) + "\n");
+            output.append("Fuel efficiency: " + Double.toString(vehicle.setFuelEfficiency()) + "\n");
+            output.append("Gas price: " + Double.toString(vehicle.setGasPrice()) + "\n\n");
+//            output.append(Double.toString(vehicle.revenue()) + "\n");
+//            output.append(Double.toString(vehicle.totalCost(distance)) + "\n");
+//            output.append(Double.toString(vehicle.totalProfit(distance)) + "\n");
+        }
+        catch (Exception e) {
+            output.setText("Invalid input. Please make sure all fields are filled out and all fields have a proper input.");
+        }
     }//GEN-LAST:event_confirmActionPerformed
     /**
      * @param args the command line arguments
