@@ -8,13 +8,16 @@ package com.mycompany.u2a1_robertchen;
  *
  * @author 335091559
  */
+import java.util.*;
 public class VehicleApp extends javax.swing.JFrame {
 
     /**
      * Creates new form Vehicle
      */
-    int passengerNum, vehicleNumber = 0;
-    double distance, gasPrice, passengerFare, fuelEfficiency;
+    int passengerNum, vehicleNumber = 0, compare1, compare2;
+    double distance, gasPrice, passengerFare, fuelEfficiency, revenue, cost, profit;
+    boolean isProfit;
+    ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
     public VehicleApp() {
         initComponents();
 
@@ -43,6 +46,11 @@ public class VehicleApp extends javax.swing.JFrame {
         fuelEfficiencyPrompt = new javax.swing.JLabel();
         vehicleFuelEfficiency = new javax.swing.JTextField();
         confirm = new javax.swing.JButton();
+        comparePrompt = new javax.swing.JLabel();
+        compareOne = new javax.swing.JTextField();
+        compareTwo = new javax.swing.JTextField();
+        compareOutput = new javax.swing.JTextField();
+        compare = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,7 +83,7 @@ public class VehicleApp extends javax.swing.JFrame {
         output.setRows(5);
         jScrollPane1.setViewportView(output);
 
-        fuelEfficiencyPrompt.setText("Enter the fuel efficiency:");
+        fuelEfficiencyPrompt.setText("Enter the fuel efficiency(L/km):");
 
         confirm.setText("Confirm");
         confirm.addActionListener(new java.awt.event.ActionListener() {
@@ -84,42 +92,67 @@ public class VehicleApp extends javax.swing.JFrame {
             }
         });
 
+        comparePrompt.setText("Enter the number of 2 vehicles you want to compare: ");
+
+        compareOutput.setEditable(false);
+
+        compare.setText("Compare");
+        compare.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                compareActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(title)
-                .addGap(56, 56, 56)
-                .addComponent(gasPricePrompt)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gasCost, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(title)
+                        .addGap(56, 56, 56)
+                        .addComponent(gasPricePrompt)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gasCost, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(35, 35, 35)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(fuelEfficiencyPrompt)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(confirm)
+                                .addGap(35, 35, 35))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(passengerNumberPrompt)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(passengerCostPrompt)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(distancePrompt)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(distanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(comparePrompt)
+                                        .addGap(18, 18, 18)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(compareTwo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(compareOne, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(compare))))
+                                    .addComponent(compareOutput, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 11, Short.MAX_VALUE)))))
                 .addGap(21, 21, 21))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(passengerNumberPrompt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(passengerCostPrompt)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(distancePrompt)
-                        .addGap(18, 18, 18)
-                        .addComponent(distanceInput, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(fuelEfficiencyPrompt)
-                        .addGap(18, 18, 18)
-                        .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(confirm)
-                        .addGap(20, 20, 20)))
-                .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +166,7 @@ public class VehicleApp extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(gasPricePrompt)
                             .addComponent(gasCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(27, 27, 27)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passengerNumberPrompt)
                     .addComponent(passengerNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,15 +178,31 @@ public class VehicleApp extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(passengerCostPrompt)
                     .addComponent(passengerCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
-                .addComponent(confirm)
-                .addGap(1, 1, 1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fuelEfficiencyPrompt)
-                    .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fuelEfficiencyPrompt)
+                            .addComponent(vehicleFuelEfficiency, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(confirm)))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comparePrompt)
+                            .addComponent(compareOne, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(25, 25, 25))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(compare)
+                        .addGap(3, 3, 3)))
+                .addComponent(compareTwo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(compareOutput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(11, Short.MAX_VALUE))
         );
 
         pack();
@@ -169,27 +218,39 @@ public class VehicleApp extends javax.swing.JFrame {
 
     private void confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmActionPerformed
         try {
+            output.setText("");
             vehicleNumber ++;
             distance = Double.parseDouble(distanceInput.getText());
             gasPrice = Double.parseDouble(gasCost.getText());
             passengerNum = Integer.parseInt(passengerNumber.getText());
             passengerFare = Double.parseDouble(passengerCost.getText());
             fuelEfficiency = Double.parseDouble(vehicleFuelEfficiency.getText());
-            Vehicle vehicle = new Vehicle(distance, passengerNum, passengerFare, fuelEfficiency, gasPrice);
-            output.append("Vehicle " + Integer.toString(vehicleNumber) + ":\n");
-            output.append("Distance travelled: " + Double.toString(vehicle.setDistance(distance)) + "\n");
-            output.append("Number of passengers: " + Integer.toString(vehicle.setPassengerNum()) + "\n");
-            output.append("Cost per passenger: " + Double.toString(vehicle.setPassengerFare()) + "\n");
-            output.append("Fuel efficiency: " + Double.toString(vehicle.setFuelEfficiency()) + "\n");
-            output.append("Gas price: " + Double.toString(vehicle.setGasPrice()) + "\n\n");
-//            output.append(Double.toString(vehicle.revenue()) + "\n");
-//            output.append(Double.toString(vehicle.totalCost(distance)) + "\n");
-//            output.append(Double.toString(vehicle.totalProfit(distance)) + "\n");
+            Vehicle vehicle = new Vehicle(distance, passengerNum, passengerFare, fuelEfficiency, gasPrice, vehicleNumber, revenue, cost, profit, 
+                    isProfit);
+            revenue = vehicle.revenue();
+            cost = vehicle.totalCost(distance);
+            profit = vehicle.totalProfit(distance);
+            isProfit = vehicle.isProfitable(distance);
+            vehicles.add(vehicle);
+            for (int i = 0; i < vehicles.size(); i++) {
+                output.append(vehicles.get(i).toString());
+            }
         }
         catch (Exception e) {
             output.setText("Invalid input. Please make sure all fields are filled out and all fields have a proper input.");
+            vehicleNumber --;
         }
     }//GEN-LAST:event_confirmActionPerformed
+
+    private void compareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareActionPerformed
+        Vehicle compareVehicles = new Vehicle(distance, passengerNum, passengerFare, fuelEfficiency, gasPrice, vehicleNumber, revenue, cost, profit, 
+                    isProfit);
+        compareVehicles.compare1 = Integer.parseInt(compareOne.getText());
+        compareVehicles.compare2 = Integer.parseInt(compareTwo.getText());
+        Vehicle vehicle1 = vehicles.get(compareVehicles.compare1 - 1);
+        Vehicle vehicle2 = vehicles.get(compareVehicles.compare2 - 1);
+        compareOutput.setText(Vehicle.compareTo(vehicle1, vehicle2, distance));
+    }//GEN-LAST:event_compareActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -229,6 +290,11 @@ public class VehicleApp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton compare;
+    private javax.swing.JTextField compareOne;
+    private javax.swing.JTextField compareOutput;
+    private javax.swing.JLabel comparePrompt;
+    private javax.swing.JTextField compareTwo;
     private javax.swing.JButton confirm;
     private javax.swing.JTextField distanceInput;
     private javax.swing.JLabel distancePrompt;
