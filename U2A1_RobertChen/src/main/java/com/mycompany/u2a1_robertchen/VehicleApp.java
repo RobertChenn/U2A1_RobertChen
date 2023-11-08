@@ -243,13 +243,19 @@ public class VehicleApp extends javax.swing.JFrame {
     }//GEN-LAST:event_confirmActionPerformed
 
     private void compareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_compareActionPerformed
-        Vehicle compareVehicles = new Vehicle(distance, passengerNum, passengerFare, fuelEfficiency, gasPrice, vehicleNumber, revenue, cost, profit, 
+        try {
+            Vehicle compareVehicles = new Vehicle(distance, passengerNum, passengerFare, fuelEfficiency, gasPrice, vehicleNumber, revenue, cost, profit,
                     isProfit);
-        compareVehicles.compare1 = Integer.parseInt(compareOne.getText());
-        compareVehicles.compare2 = Integer.parseInt(compareTwo.getText());
-        Vehicle vehicle1 = vehicles.get(compareVehicles.compare1 - 1);
-        Vehicle vehicle2 = vehicles.get(compareVehicles.compare2 - 1);
-        compareOutput.setText(Vehicle.compareTo(vehicle1, vehicle2, distance));
+            compareVehicles.compare1 = Integer.parseInt(compareOne.getText());
+            compareVehicles.compare2 = Integer.parseInt(compareTwo.getText());
+            Vehicle vehicle1 = vehicles.get(compareVehicles.compare1 - 1);
+            Vehicle vehicle2 = vehicles.get(compareVehicles.compare2 - 1);
+            compareOutput.setText(Vehicle.compareTo(vehicle1, vehicle2, distance));
+        }
+        catch (Exception e) {
+            compareOutput.setText("Invalid input. Please enter an integer for both text fields "
+                    + "and there are at least two vehicles objects.");
+        }
     }//GEN-LAST:event_compareActionPerformed
     /**
      * @param args the command line arguments
